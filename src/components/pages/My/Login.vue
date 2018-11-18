@@ -2,14 +2,13 @@
 	<div>
 		<div class="imgs">
 			<img src="../../../img/reg.gif">
-			<router-link to="/" tag="i" class="fa fa-home"></router-link>
+			<router-link to="/" tag="i" class="fa fa-home">
+			</router-link>
 		</div>
 		<div>
 			<form onsubmit="return false" method="post">
 				<div class="email">
 					<input id="email" v-model="emailVal" name="email" @change="emailIsOk" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required">
-					<input type="button" id="clickTest" v-show="!djsCheck" value="获取验证码" @click="clickTest">
-					<span id="djs" v-show="djsCheck">倒计时：<b>60</b>秒</span>
 					<i class="fa fa-check emailcheck" v-show="emailCheck"></i>
 					<p id="emailVerify"></p>
 				</div>
@@ -18,28 +17,45 @@
 					<i class="fa fa-check passcheck" v-show="passCheck"></i>
 					<p id="passVerify"></p>
 				</div>
-				<div class="testNum">
-					<input id="testNum" type="text" placeholder="验证码" v-model="yzmVal" required="required" autocomplete="off">
-					
+				
+				<div  class="reg">
+					<router-link to="/my/reg">还没账号？立即注册</router-link>
 				</div>
-				<div  class="login">
-					<router-link to="login">已有账号？立即登录</router-link>
-				</div>
-				<div class="reg">
-					<input type="submit" name="" value="注册" @click="reg">
+				<div class="login">
+					<input type="submit" name="" value="登录" @click="login">
 				</div>
 			</form>
+
+
+
+			<!-- <form method="post" onsubmit="return false">
+				<div class="email">
+					<input id="email" name="" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required" @>
+					<p id="emailVerify"></p>
+				</div>
+				<div class="pass">
+					<input id="pass" type="password" placeholder="密码" required="required">
+					<p id="passVerify"></p>
+				</div>
+				<div  class="reg">
+					<router-link to="/reg">还没账号？立即注册</router-link>
+				</div>
+				<div class="login">
+					<input type="submit" name="" value="登录" >
+				</div> -->
+				<!-- <div id="mpanel4" ></div> -->
+
+			<!-- </form> -->
 		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
-	import Header from '../../commonts/Header';
 	export default{
-		name: 'Reg',
+		name: 'Login',
 		data(){
 			return {
-				test: "Reg",
+				test: "Login",
 				url: '',
 				emailVal: '',
 				passVal: '',
@@ -49,16 +65,32 @@
 				emailCheck: false,
 				passCheck: false,
 				djsCheck: false,
-				num: '0',
 			}
 		},
 		components:{
-			Header
 		},
 		methods:{
-			
-			//失焦验证邮箱是否可用
-			emailIsOk(){	
+			// setCookie(cookieName, cookieValue, date, path){
+			// 	// 包装数据
+			// 	var data = {
+			// 		"val" : cookieValue
+			// 	}
+			// 	// 编码
+			// 	var str = cookieName+"="+encodeURIComponent(JSON.stringify(data));
+			// 	// 过期时间
+			// 	if( date ){
+			// 		var dt = new Date();
+			// 		dt.setDate(dt.getDate()+date);
+			// 		str += ";expires="+dt.toGMTString();
+			// 	}
+			// 	// path属性
+			// 	if( path ){
+			// 		str += ";path="+path;
+			// 	}
+			// 	// 设置cookie
+			// 	document.cookie = str;
+			// },
+			emailIsOk(){
 				this.url = '/emaitest/admin/emailTest';
 				var emailTest = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.emailVal);
 				if(emailTest){
@@ -68,15 +100,15 @@
 					}})
 					.then((res)=>{
 						if(!res.data.code){
-							$("#emailVerify").html("")
-							this.emailCheck = true;
-							this.isOk = true;
-						}
-						else{
-							$("#emailVerify").html(res.data.msg);
+							$("#emailVerify").html("该邮箱尚未注册");
 							$("#emailVerify").css("color","red");
 							this.emailCheck = false;
 							this.isOk = false;
+						}
+						else{
+							$("#emailVerify").html("");
+							this.emailCheck = true;
+							this.isOk = true;
 						}
 					})
 					.catch((err)=>{
@@ -92,40 +124,6 @@
 					$("#emailVerify").css("color","red");
 				}
 			},
-
-			//点击获取验证码
-			clickTest(){
-				if(this.isOk){
-					this.djsCheck=!this.djsCheck;
-					this.url = "/emaitest/admin/dataTest";
-					var numTest = parseInt(Math.random()*9999+1);
-					this.$axios.post(this.url,{
-						params:{
-							"mail":this.emailVal,"msg":numTest
-					}})
-					.then((res)=>{
-						this.num = $("#djs b").html()*1;
-						var timer = setInterval(()=>{
-							$("#clickTest").next().html("倒计时：<b>"+(this.num--)+"</b>秒");
-							if(this.num<=0){
-								clearInterval(timer);
-								console.log(this.djsCheck);
-								this.djsCheck=!this.djsCheck;
-								$("#djs").html("倒计时：<b>60</b>秒")
-							}
-						},1000);
-						
-					})
-					.catch((err)=>{
-						console.log(err);
-					})
-				}
-				else{
-					alert("请输入正确的邮箱")
-				}
-			},
-
-			//失去焦点验证密码
 			passIsOk(){
 				var passTest = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z_]{6,16}$/.test(this.passVal);
 				if(passTest){
@@ -140,32 +138,25 @@
 					this.isOk2 = false;
 				}
 			},
-
-			//点击注册
-			reg(){
-				// var mail = $("#email").val();
-				// var pass = $("#pass").val();
-				// var code = $("#testNum").val();
-				
-				this.url = "/emaitest/admin/reg";
-				if(this.emailVal && this.passVal && this.yzmVal){
+			login(){
+				this.url = "/emaitest/admin/login";
+				if(this.emailVal&&this.passVal){
 					if(this.isOk){
 						if(this.isOk2){
-							console.log(this.yzmVal,this.emailVal,this.passVal);
-							this.$axios.post(this.url,{
-								params:{"mail":this.emailVal,"pass":this.passVal,"code":this.yzmVal}})
+							this.$axios.post(this.url,{params:{"mail": this.emailVal,"pass":this.passVal}})
 							.then((res)=>{
-								console.log(res);
-								if(res.data == '注册成功'){
-									var login = confirm("注册成功,是否登陆");
-									// if(login){
-										// location.href="login.html"
-									// }
+								if(res.data.code==0){
+									window.localStorage.setItem("login",this.emailVal);  
+									this.$router.replace("/");
+									
 								}
 								else{
-									alert(res.data);
+									this.emailVal="";
+									this.passVal="";
+									this.emailCheck=false;
+									this.passCheck=false;
+									alert("邮箱/密码错误");
 								}
-								
 							})
 							.catch((err)=>{
 								console.log(err);
@@ -176,23 +167,53 @@
 						}
 					}
 					else{
-						alert("请输入正确的邮箱")
+						alert("请输入正确的邮箱");
 					}
-					// $("#email").val("");
-					// $("#pass").val("");
-					// $("#testNum").val("");
-					// $("#passVerify").html("");
-					// $("#emailVerify").html("");
 				}
 				
-				// return false
+				return false;
 			}
-		}
+		},
+		// mounted(){
+		// 	$('#mpanel4').slideVerify({
+		// 	type : 2,		//类型
+		// 	vOffset : 5,	//误差量，根据需求自行调整
+		// 	vSpace : 5,	//间隔
+		// 	imgName : ['http://p4.so.qhmsg.com/bdr/200_200_/t01985baef35df3ee39.jpg', 'http://p4.so.qhmsg.com/bdr/200_200_/t01985baef35df3ee39.jpg'],
+		// 	imgSize : {
+		// 		width: '400px',
+		// 		height: '200px',
+		// 	},
+		// 	blockSize : {
+		// 		width: '40px',
+		// 		height: '40px',
+		// 	},
+		// 	barSize : {
+		// 		width : '400px',
+		// 		height : '40px',
+		// 	},
+		// 	ready : function() {
+		// 		console.log(11);
+		// 	},
+		// 	success : function() {
+		// 		alert('ok');
+		// 	},
+		// 	error : function() {
+		// 		console.log(22);
+		// //		        	alert('验证失败！');
+		// 	}
+			
+		// });
+		// }
 	}
 </script>
 
 <style type="text/css" lang="less" scoped>
 @import url('../../../styles/main.less');
+@import url('../../../../static/yzm-cj/css/verify.css');
+#mpanel4{
+	.fs(14);
+}
 .imgs{
 	.margin(0,0,40,0);
 	img{
@@ -237,24 +258,16 @@
 	}
 }
 
-#clickTest,#djs{
+
+#clickTest{
 	position:absolute;
 	.w(90);
-	.h(30);
-	.lh(30);
-	display: inline-block;
-	.fs(12);
 	color: #fff;
 	right: 0;
 	.top(10);
 	background-color: #e44204;
 }
-#djs{
-	border: 1px solid #e44204;
-	background-color: #fff;
-	color: #e44204;
-}
-.login{
+.reg{
 	text-align: center;
 	a{
 		.fs(14);
@@ -262,7 +275,7 @@
 		text-decoration: underline;
 	}
 }
-.reg{
+.login{
 	text-align: center;
 	.margin(20,0,0,0);
 	input{
@@ -284,11 +297,12 @@
 	.lh(20);
 	position: absolute;
 	.top(14);
-	.right(100);
+	.right(0);
 	border-radius: 50%;
 }
-.passcheck{
-	.top(14);
-	.right(0);
-}
+// .passcheck{
+// 	.top(14);
+// 	.right(0);
+// }
+
 </style>

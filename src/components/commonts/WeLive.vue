@@ -48,17 +48,15 @@
 </template>
 
 <script type="text/javascript">
+	// import Home from '../pages/Home/Home'
 	export default{
 		name: 'WeLive',
+		props:["id"],
 		data(){
 			return {
 				test: "WeLive",
+				a:"",
 				url: '/api/web-api/home-page/home-data',
-				data:{
-					params:{
-						city_id:1
-					}
-				},
 				LivePhoto:[],
 				anXinLive:[],
 				anXinAlone:[]
@@ -66,22 +64,34 @@
 		},
 		methods:{
 			getWeLive(){
-		        this.$axios.get(this.url,this.data)
+		        this.$axios.get(this.url,{
+					params:{
+						city_id:this.id
+					}
+				})
 		        .then((res)=>{
-		            
+		            console.log(this.id);
 		            this.LivePhoto = res.data[1].data;
 		            this.anXinLive = res.data[2].data;
 		            this.anXinAlone = res.data[3].data;
-		            console.log( this.LivePhoto);
+		            console.log( res);
 		        })
 		        .catch((err)=>{
 		        	console.log(err);
 		        })
+		    },
+		    changeId(id){
+		    	this.id=id;
 		    }
 		},
 		created(){
 			this.getWeLive();
-		}
+		},
+
+		// updated(){
+		// 	console.log(this.id);
+		// 	this.getWeLive();
+		// }
 	}
 </script>
 

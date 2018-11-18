@@ -1,15 +1,27 @@
 <template>
   	<div>
-  		<div class="bg">
-  		
-	 	</div>
-		<div class='cityList'>
-			<ul>
-				<li v-for="(item,index) of city" :key="index">{{item.shortName}}</li>
-			</ul>
-			<p >x</p>
-		</div>
-
+  		<transition
+  		enter-active-class = 'animated fadeIn'
+  		leave-active-class = 'animated fadeOut'
+  		>
+	  		<div>
+	  			<div class="bg"></div>
+				<div class='cityList'>
+					<ul>
+						<router-link 
+						tag="li" to="/home" 
+						v-for="(item,index) of city" 
+						:key="index"
+						>
+						<div @click="change(item.id,item.shortName)">
+							{{item.shortName}}
+						</div>
+						</router-link>
+					</ul>
+					<p >x</p>
+				</div>
+	  		</div>
+		</transition>
   	</div>
 </template>
 
@@ -22,6 +34,9 @@ export default {
   		}
   	},
   	methods:{
+  		change(id,city){
+  			this.$emit('toggle',id,city)
+  		}
   	},
   	created(){
   		console.log(this.city,25);

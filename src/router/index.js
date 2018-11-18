@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/pages/Home/Home';
-import Reg from '../components/pages/Reg/Reg';
-import Login from '../components/pages/Login/Login';
+import My from '../components/pages/My/My';
+import Reg from '../components/pages/My/Reg';
+import Login from '../components/pages/My/Login';
+import MyInfo from '../components/pages/My/MyInfo';
 
 Vue.use(Router)
 
@@ -18,14 +20,16 @@ export default new Router({
       component: Home
     },
     {
-      path: '/reg',
-      name: 'Reg',
-      component: Reg
+        path: '/my',
+        name: 'My',
+        component: My,
+        children:[
+            {path: 'reg',name: 'Reg',component: Reg},
+            {path: 'login',name: 'Login', component: Login},
+            {path: 'myinfo',name: 'MyInfo', component: MyInfo}
+        ]
     },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    }
+    
+    
   ]
 })

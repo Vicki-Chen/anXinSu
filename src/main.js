@@ -9,6 +9,8 @@ import $ from 'jquery'
 import '../static/yzm-cj/js/verify.js'
 Vue.prototype.$axios = Axios
 Vue.config.productionTip = false
+import store from './store/index.js'
+import '../node_modules/animate.css/animate.css'
 // Axios.interceptors.require.use(function (require) {
 //     return require;
 //   }, function (error) {
@@ -24,6 +26,7 @@ Axios.interceptors.response.use(function (response) {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

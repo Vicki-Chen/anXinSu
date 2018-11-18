@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<Header />
+		<Header @cityId="cityId" />
 		<Banner />
 		<ItemList />
-		<WeLive />
+		<WeLive :id="id"/>
 		<Footer />
 	</div>
 </template>
@@ -18,7 +18,14 @@
 		name: 'Home',
 		data(){
 			return {
-				test: "home"
+				test: "home",
+				id: 1,
+			}
+		},
+		methods:{
+			cityId(id){
+				this.id=id
+				console.log(this.id,26);
 			}
 		},
 		components:{

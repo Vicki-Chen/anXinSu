@@ -4,14 +4,15 @@
 			<p>我们住在这</p>
 			<p>纷纷扰扰这个世界&nbsp;所有的了解&nbsp;只要&nbsp;让我留在你身边</p>
 			<div class="WeLiveIn">
-				<a :href="'https://baike.baidu.com/item/'+item.title"  v-for="(item,index) of LivePhoto" :key="index">
-					<img  :src="item.image" />
-					<div class="titleCity">
-						{{item.title}}
-						<span>{{item.sub_title}}</span>
-					</div>
+				<a  v-for="(item,index) of LivePhoto" :key="index" @click="changeIntro(item.url)">
+					<router-link to="/introduce">
+						<img  :src="item.image" />
+						<div class="titleCity">
+							{{item.title}}
+							<span>{{item.sub_title}}</span>
+						</div>
+					</router-link>
 				</a>
-				
 			</div>
 		</div>
 		<div class="anXinZhu">
@@ -48,7 +49,7 @@
 </template>
 
 <script type="text/javascript">
-	// import Home from '../pages/Home/Home'
+	// import Introduce from './Introduce'
 	export default{
 		name: 'WeLive',
 		props:["id"],
@@ -59,8 +60,13 @@
 				url: '/api/web-api/home-page/home-data',
 				LivePhoto:[],
 				anXinLive:[],
+				city:'',
+				trade:'',
 				anXinAlone:[]
 			}
+		},
+		components:{
+			// Introduce
 		},
 		methods:{
 			getWeLive(){
@@ -70,11 +76,10 @@
 					}
 				})
 		        .then((res)=>{
-		            console.log(this.id);
+		           
 		            this.LivePhoto = res.data[1].data;
 		            this.anXinLive = res.data[2].data;
 		            this.anXinAlone = res.data[3].data;
-		            console.log( res);
 		        })
 		        .catch((err)=>{
 		        	console.log(err);
@@ -82,12 +87,18 @@
 		    },
 		    changeId(id){
 		    	this.id=id;
+		    },
+		    changeIntro(url){
+		    	// this.$store.state.introduce=url;
+		    	this.$store.commit('changeIntroduce',url)
+		    	this.city = url.split("?")[1].split("=")[1].split("&")[0];
+		    	this.trade = url.split("?")[1].split("=")[2];
+		    	this.$emit('intro',this.city,this.trade)
 		    }
 		},
 		created(){
 			this.getWeLive();
 		},
-
 		// updated(){
 		// 	console.log(this.id);
 		// 	this.getWeLive();

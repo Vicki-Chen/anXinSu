@@ -160,6 +160,9 @@
 									if(login){
 										this.$router.replace("/my/login")
 									}
+									else{
+										this.$router.replace("/")
+									}
 								}
 								else{
 									alert(res.data);
@@ -177,14 +180,7 @@
 					else{
 						alert("请输入正确的邮箱")
 					}
-					// $("#email").val("");
-					// $("#pass").val("");
-					// $("#testNum").val("");
-					// $("#passVerify").html("");
-					// $("#emailVerify").html("");
 				}
-				
-				// return false
 			}
 		}
 	}

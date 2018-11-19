@@ -1,10 +1,10 @@
 <template>
   	<div class="ItemList">
   		<ul>
-  			<li v-for='(item,index) of list' :key='index'>
+  			<router-link to="/list" tag="li" v-for='(item,index) of list' :key='index'>
   				<i :class='item.icon'></i>
   				<p>{{item.name}}</p>
-  			</li>
+  			</router-link>
   		</ul>
   		<div class="NewList">
   			<div>

@@ -147,6 +147,7 @@
 							.then((res)=>{
 								if(res.data.code==0){
 									window.localStorage.setItem("login",this.emailVal);  
+									this.$store.commit('changeLogin',this.emailVal)
 									this.$router.replace("/");
 									
 								}

@@ -39,7 +39,7 @@ export default {
   		}
   	},
   	created(){
-  		console.log(this.city,25);
+  		
   	},
   	props:['city']
 }

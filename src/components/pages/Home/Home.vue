@@ -3,7 +3,7 @@
 		<Header @cityId="cityId" />
 		<Banner />
 		<ItemList />
-		<WeLive :id="id"/>
+		<WeLive :id="id" @intro = "intro" />
 		<Footer />
 	</div>
 </template>
@@ -26,6 +26,9 @@
 			cityId(id){
 				this.id=id
 				console.log(this.id,26);
+			},
+			intro(city,trade){
+				console.log(city,trade);
 			}
 		},
 		components:{
@@ -34,7 +37,10 @@
 			ItemList,
 			WeLive,
 			Footer
-		}
+		},
+		// mounted(){
+		// 	this.reload();
+		// }
 	}
 </script>
 

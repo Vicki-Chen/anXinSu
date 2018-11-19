@@ -5,7 +5,8 @@ import My from '../components/pages/My/My';
 import Reg from '../components/pages/My/Reg';
 import Login from '../components/pages/My/Login';
 import MyInfo from '../components/pages/My/MyInfo';
-
+import Introduce from '../components/pages/Introduce/Introduce';
+import List from '../components/pages/List/List';
 Vue.use(Router)
 
 export default new Router({
@@ -29,7 +30,15 @@ export default new Router({
             {path: 'myinfo',name: 'MyInfo', component: MyInfo}
         ]
     },
-    
-    
+    {
+      path: '/introduce',
+      name: 'Introduce',
+      component: Introduce
+    },
+    {
+      path: '/list',
+      name: 'List',
+      component: List
+    },
   ]
 })

@@ -2,7 +2,7 @@
   	<div>
   		<div class="header">
 	  		<div class="left">
-	  			<div>
+	  			<div @click="getNav()">
 	  				<img src="../../img/logo.jpg">
 	  			</div>
   				<span @click="getCity()" >
@@ -18,12 +18,15 @@
 	  			</router-link>
 	  		</div>
  		</div>
- 		<CityList v-if="isShow" :city = "city" @toggle="toggle"></CityList>
+		<NavList v-show="isShow2" @toggle2="toggle2"></NavList>
+ 		<CityList v-show="isShow" :city = "city" @toggle="toggle"></CityList>
+ 		
   	</div>
 </template>
 
 <script>
-	import CityList from './CityList'
+	import CityList from './CityList';
+	import NavList from './NavList'
 	import Vue from 'vue'
 	// import Home from '../pages/Home/Home'
 export default {
@@ -41,10 +44,12 @@ export default {
 	            }
 	        },
 	        isShow: false,
+	        isShow2: false,
   		}
   	},
   	components:{
-  		CityList
+  		CityList,
+  		NavList
   	},
   	methods:{
   		toggle(id,city){
@@ -54,11 +59,15 @@ export default {
   			this.nowCity = city;
   			this.$emit("cityId",id);
   		},
+  		toggle2(){
+  			this.isShow2 = false;
+  		},
   		getCity(){
   			this.$axios.get(this.url,this.data)
 	        .then((res)=>{
 	            this.city = res.data;
 	            Vue.nextTick(()=>{
+	            	this.isShow2 = false;
 	            	this.isShow = !this.isShow;
 	            });
 	        })
@@ -66,8 +75,11 @@ export default {
 	        	console.log(err);
 	        })
   		},
+  		getNav(){
+  			this.isShow = false;
+  			this.isShow2 = !this.isShow2;
+  		},
   		isLog(){
-  			console.log(this.$store.state.login);
   			if(this.$store.state.login){
   				this.isLogin=this.$store.state.login.split("@")[0].substring(0,2)+"***"+this.$store.state.login.split("@")[0].substring(5);
   				console.log(this.isLogin);

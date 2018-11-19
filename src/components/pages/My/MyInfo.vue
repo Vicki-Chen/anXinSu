@@ -1,8 +1,14 @@
 <template>
 	<div class="myinfo">
 		<div class="head">
-			<img src="../../../img/logo.png">
-			<i class="fa fa-cog" ></i>
+			<router-link to="/"><img src="../../../img/logo.png"></router-link>
+			<div @click="show">
+				<i class="fa fa-cog" ></i>
+				<ul v-show="isShow" @click.stop="show">
+					<li>修改个人信息</li>
+					<li @click="leave">退出</li>
+				</ul>
+			</div>
 		</div>
 		<div class="inf">
 			<img src="../../../img/phone.jpg">
@@ -38,12 +44,22 @@
 			return {
 				test: "MyInfo",
 				login:"",
+				isShow: false,
 				list: [{icon:'fa fa-commenting',"name":"联系客服"},{icon:'fa fa-address-book',"name":"联系人"},{icon:'fa fa-envelope-open',"name":"我的私信"},{icon:'fa fa-star',"name":"我的收藏"},]
 			}
 		},
 		methods:{
 			infoMsg(){
 				this.login = this.$store.state.login;
+			},
+			leave(){
+				localStorage.removeItem('login');
+				this.$store.commit('changeLogin',false)
+				this.$router.replace("/my/login")
+			},
+			show(){
+				console.log(1);
+				this.isShow = !this.isShow;
 			}
 		},
 		created(){
@@ -57,6 +73,11 @@
 
 .head{
 	.h(50);
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 	.padding(0,20,0,20);
 	display: flex;
 	align-items: center;
@@ -65,11 +86,30 @@
 	img{
 		.h(30);
 	}
+	div{
+		.h(50);
+		.lh(50);
+		position: relative;
+		z-index:1;
+		ul{
+			position: absolute;
+			.top(50);
+			.right(-20);
+			border:1px solid #ccc;
+			background-color: #fff;
+			z-index:3;
+			text-align: center;
+			.w(130);
+
+		}
+	}
 }
 .inf{
+	.margin(50,0,0,0);
 	width: 100%;
 	.h(200);
 	background: url(../../../img/bg.png) right;
+	background-size: 100%;
 	.padding(0,20,0,10);
 	align-items: center;
 	color: #fff;
@@ -87,38 +127,41 @@
 		text-decoration: underline;
 	}
 }
-ul{
-	border-bottom:10px solid #eee;
-	display: flex;
-	justify-content: space-around;
-	.padding(20,0,15,0);
-	li{
-		.fs(14);
-		width:25%;
-		text-align: center;
-		i{
-			display: inline-block;
-			.w(50);
-			.h(50);
-			border-radius: 50%;
-			background-color: orange;
-			.fs(24);
+.serve{
+	ul{
+		border-bottom:10px solid #eee;
+		display: flex;
+		justify-content: space-around;
+		.padding(20,0,15,0);
+		li{
+			.fs(14);
+			width:25%;
 			text-align: center;
-			.lh(50);
-			color: #eee;
-			.margin(0,0,10,0);
-		}
-		.fa-address-book{
-			background-color: #82c8e8;
-		}
-		.fa-envelope-open{
-			background-color: #44c288;
-		}
-		.fa-star{
-			background-color: #f47e4b;
+			i{
+				display: inline-block;
+				.w(50);
+				.h(50);
+				border-radius: 50%;
+				background-color: orange;
+				.fs(24);
+				text-align: center;
+				.lh(50);
+				color: #eee;
+				.margin(0,0,10,0);
+			}
+			.fa-address-book{
+				background-color: #82c8e8;
+			}
+			.fa-envelope-open{
+				background-color: #44c288;
+			}
+			.fa-star{
+				background-color: #f47e4b;
+			}
 		}
 	}
 }
+
 .ad{
 	background-color: #fff;
 	.margin(20,0,0,0);
@@ -134,10 +177,11 @@ ul{
 			width:43%;
 			.margin(30,0,30,0);
 		}
+
 	}
 	p{
-		text-align: center;
-		.fs(14);
-	}
+			text-align: center;
+			.fs(14);
+		}
 }
 </style>

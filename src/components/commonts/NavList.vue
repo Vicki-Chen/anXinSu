@@ -8,7 +8,7 @@
 				<div class="bg"></div>
 			<div>
 				<ul>
-					<router-link v-for="(item,index) of list" :to="item.path" tag="li">{{item.name}}</router-link>
+					<router-link v-for="(item,index) of list" :to="item.path" tag="li" :key="index">{{item.name}}</router-link>
 				</ul>
 			</div>
 			</div>

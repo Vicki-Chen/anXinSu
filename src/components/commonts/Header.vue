@@ -35,7 +35,7 @@ export default {
   		return {
   			city:[1],
   			id: 1,
-  			nowCity:"北京",
+  			nowCity:this.$store.state.city,
   			url: '/api/web-api/base-configure/city-list',
   			isLogin: "立即登录",
 	        data:{
@@ -55,7 +55,6 @@ export default {
   		toggle(id,city){
   			this.isShow = false;
   			this.id=id;
-  			// console.log(id);
   			this.nowCity = city;
   			this.$emit("cityId",id);
   		},
@@ -82,7 +81,6 @@ export default {
   		isLog(){
   			if(this.$store.state.login){
   				this.isLogin=this.$store.state.login.split("@")[0].substring(0,2)+"***"+this.$store.state.login.split("@")[0].substring(5);
-  				console.log(this.isLogin);
   			}
   			else{
   				this.isLogin="立即登录"

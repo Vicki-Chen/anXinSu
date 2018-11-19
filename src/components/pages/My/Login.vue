@@ -8,12 +8,12 @@
 		<div>
 			<form onsubmit="return false" method="post">
 				<div class="email">
-					<input id="email" v-model="emailVal" name="email" @change="emailIsOk" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required">
+					<input id="email" v-model="emailVal" name="email" @change="emailIsOk" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required" />
 					<i class="fa fa-check emailcheck" v-show="emailCheck"></i>
 					<p id="emailVerify"></p>
 				</div>
 				<div class="pass">
-					<input id="pass" type="password" v-model="passVal" placeholder="密码" required="required" @blur="passIsOk">
+					<input id="pass" type="password" v-model="passVal" placeholder="密码" required="required" @blur="passIsOk" />
 					<i class="fa fa-check passcheck" v-show="passCheck"></i>
 					<p id="passVerify"></p>
 				</div>
@@ -22,7 +22,7 @@
 					<router-link to="/my/reg">还没账号？立即注册</router-link>
 				</div>
 				<div class="login">
-					<input type="submit" name="" value="登录" @click="login">
+					<input type="submit" name="" value="登录" @click="login" />
 				</div>
 			</form>
 

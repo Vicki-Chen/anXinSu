@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="WeLive">
+		<div class="WeLive" v-show="isShow">
 			<p>我们住在这</p>
 			<p>纷纷扰扰这个世界&nbsp;所有的了解&nbsp;只要&nbsp;让我留在你身边</p>
 			<div class="WeLiveIn">
@@ -30,7 +30,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="anXinZiJu">
+		<div class="anXinZiJu" v-show="isShow3">
 			<p class="titleAn">安心自居</p>
 			<ul>
 				<li v-for="(item,index) of anXinAlone" :key="index">
@@ -49,7 +49,6 @@
 </template>
 
 <script type="text/javascript">
-	// import Introduce from './Introduce'
 	export default{
 		name: 'WeLive',
 		props:["id"],
@@ -58,6 +57,9 @@
 				test: "WeLive",
 				a:"",
 				url: '/api/web-api/home-page/home-data',
+				isShow:true,
+				isShow2:true,
+				isShow3:true,
 				LivePhoto:[],
 				anXinLive:[],
 				city:'',
@@ -72,14 +74,26 @@
 			getWeLive(){
 		        this.$axios.get(this.url,{
 					params:{
-						city_id:this.id
+						city_id:this.$store.state.cityid
 					}
 				})
 		        .then((res)=>{
-		           
-		            this.LivePhoto = res.data[1].data;
+		        	if(!res.data[1].data.length){
+		        		this.isShow=false;
+		        	}
+		        	else{
+		        		this.isShow=true;
+		        		this.LivePhoto = res.data[1].data;
+		        	}
 		            this.anXinLive = res.data[2].data;
-		            this.anXinAlone = res.data[3].data;
+		            // this.anXinAlone = res.data[3].data;
+		            if(!res.data[3].data.length){
+		        		this.isShow3=false;
+		        	}
+		        	else{
+		        		this.isShow3=true;
+		        		this.anXinAlone = res.data[3].data;
+		        	}
 		        })
 		        .catch((err)=>{
 		        	console.log(err);
@@ -89,20 +103,21 @@
 		    	this.id=id;
 		    },
 		    changeIntro(url){
-		    	// this.$store.state.introduce=url;
 		    	this.$store.commit('changeIntroduce',url)
 		    	this.city = url.split("?")[1].split("=")[1].split("&")[0];
 		    	this.trade = url.split("?")[1].split("=")[2];
 		    	this.$emit('intro',this.city,this.trade)
-		    }
+		    },
+
 		},
+		watch:{
+	        id(val, oldVal){//普通的watch监听
+	           this.getWeLive();
+	        }
+        },
 		created(){
 			this.getWeLive();
 		},
-		// updated(){
-		// 	console.log(this.id);
-		// 	this.getWeLive();
-		// }
 	}
 </script>
 

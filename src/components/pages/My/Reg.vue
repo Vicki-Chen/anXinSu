@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<div class="imgs">
-			<img src="../../../img/reg.gif">
+			<img src="../../../img/reg.gif" />
 			<router-link to="/" tag="i" class="fa fa-home"></router-link>
 		</div>
 		<div>
 			<form onsubmit="return false" method="post">
 				<div class="email">
 					<input id="email" v-model="emailVal" name="email" @change="emailIsOk" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required">
-					<input type="button" id="clickTest" v-show="!djsCheck" value="获取验证码" @click="clickTest">
+					<input type="button" id="clickTest" v-show="!djsCheck" value="获取验证码" @click="clickTest" />
 					<span id="djs" v-show="djsCheck">倒计时：<b>60</b>秒</span>
 					<i class="fa fa-check emailcheck" v-show="emailCheck"></i>
 					<p id="emailVerify"></p>

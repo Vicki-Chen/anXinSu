@@ -3,8 +3,11 @@
 		<Header></Header>
 		<div class="bg"></div>
 		<div class="checked">
-			<select @click="changeList(this)" v-model="val">
-				<option v-for="(item,index) in posi" :key="index">{{item}}</option>
+			<select @change="changeList" v-model="val">
+				<option v-for="(item,index) in posi" :key="index" :value="item">{{item}}</option>
+			</select>
+			<select @change="changeCount" v-model="val2">
+				<option v-for="(item,index) in count" :key="index" :value="item">{{item}}</option>
 			</select>
 		</div>
 		<div>
@@ -51,9 +54,11 @@
 		data(){
 			return {
 				val:"",
+				val2:"10",
 				obj:"",
-				posi:["d朝阳区-b北苑", "d朝阳区-b欢乐谷景区", "d朝阳区-b立水桥", "d海淀区-b上地", "d丰台区-b石榴庄", "d昌平区-b天通苑", "d朝阳区-b北苑", "d朝阳区-b欢乐谷景区", "d朝阳区-b立水桥", "d海淀区-b上地", "d丰台区-b石榴庄", "d昌平区-b天通苑"],
+				posi:["d朝阳区-b北苑", "d朝阳区-b欢乐谷景区", "d朝阳区-b立水桥", "d海淀区-b上地", "d丰台区-b石榴庄", "d昌平区-b天通苑"],
 				city:"bj",
+				count:[5,10,20,50],
 				page:1,
 				per_page:10,
 				sendData:[],
@@ -63,9 +68,14 @@
 			loadMore(){
 				this.getData();
 			},
+			// getVal(){
+			// 	this.val = this
+			// },
+
 			getData(){
 				this.obj=this.$store.state.citypos;
 				if(this.obj){
+					this.posi=[];
 					this.city=this.obj.name;
 				// console.log(this.city);
 					$.each(this.obj,(key,value)=>{
@@ -74,12 +84,12 @@
 	                	}
 	             	})
 				}
-				// console.log(this.obj,26);
-				
-             	// console.log(this.city,this.posi);
+				if(!this.val){
+					this.val = this.posi[0]
+				}
              	this.$axios.get('/api/room/get-room-list/'+this.city,{
              		params:{
-             			position:this.posi[0],
+             			position:this.val,
              			page:this.page,
              			per_page:this.per_page
              		}
@@ -93,13 +103,18 @@
              		console.log(err);
              	})
 			},
-			changeList(now){
-				console.log(now);
+			changeList(){
+				console.log(this.val);
+				this.page=1;
+				this.per_page=10;
+				this.sendData=[];
+				this.getData();
+			},
+			changeCount(){
+				this.per_page=this.val2;
+				this.getData();
 			}
 		},
-		changeList:function(now){
-				console.log(now);
-			},
 		components:{
 			Header
 		},
@@ -113,7 +128,7 @@
 @import url('../../../styles/main.less');
 .bg{
 	.h(50);
-	background-color: #888;
+	background-color: #eee;
 }
 
 .checked{

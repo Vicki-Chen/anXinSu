@@ -25,7 +25,6 @@
 		methods:{
 			cityId(id){
 				this.id=id
-				console.log(this.id,26);
 			},
 			intro(city,trade){
 				console.log(city,trade);

@@ -9,7 +9,7 @@
 				<div class='cityList'>
 					<ul>
 						<router-link 
-						tag="li" to="/home" 
+						tag="li" to="/" 
 						v-for="(item,index) of city" 
 						:key="index"
 						>
@@ -35,6 +35,8 @@ export default {
   	},
   	methods:{
   		change(id,city){
+  			this.$store.commit("changeCityId",id);
+  			this.$store.commit("changeCity",city);
   			this.$emit('toggle',id,city)
   		}
   	},

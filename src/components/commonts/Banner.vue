@@ -1,5 +1,6 @@
 <template>
 	<div class="Banner">
+		<div class="bg"></div>
 		<mt-swipe :auto="3000" >	
 		<!-- 要加上边框才能使用 -->
 	  		<mt-swipe-item><img src="../../img/banner1.gif"></mt-swipe-item>
@@ -33,9 +34,18 @@
 
 <style type="text/css" lang="less" scoped>
 @import url('../../styles/main.less');
+.bg{
+	.h(50);
+	width: 100%;
+	position: fixed;
+	// z-index: 2;
+	.top(0);
+	.left(0);
+	background-color: #3dbcc6;
+}
 .Banner{
 	position: relative;
-	// z-index:-1;
+	z-index:5;
 	.w(375);
 	.h(248);
 	img{

@@ -7,6 +7,9 @@ import Login from '../components/pages/My/Login';
 import MyInfo from '../components/pages/My/MyInfo';
 import Introduce from '../components/pages/Introduce/Introduce';
 import List from '../components/pages/List/List';
+import Detail from '../components/pages/Detail/Detail';
+import Detail2 from '../components/pages/Detail/Detail2';
+
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +42,16 @@ export default new Router({
       path: '/list',
       name: 'List',
       component: List
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: Detail
+    },
+     {
+      path: '/detail2',
+      name: 'Detail2',
+      component: Detail2
     },
   ]
 })

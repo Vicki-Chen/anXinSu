@@ -13,7 +13,7 @@
 						v-for="(item,index) of city" 
 						:key="index"
 						>
-						<div @click="change(item.id,item.shortName)">
+						<div @click="change(item.id,item.shortName,item.code)">
 							{{item.shortName}}
 						</div>
 						</router-link>
@@ -34,10 +34,10 @@ export default {
   		}
   	},
   	methods:{
-  		change(id,city){
+  		change(id,city,code){
   			this.$store.commit("changeCityId",id);
   			this.$store.commit("changeCity",city);
-  			this.$emit('toggle',id,city)
+  			this.$emit('toggle',id,city,code)
   		}
   	},
   	created(){

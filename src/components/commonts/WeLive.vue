@@ -9,7 +9,7 @@
 						<img  :src="item.image" />
 						<div class="titleCity">
 							{{item.title}}
-							<span>{{item.sub_title}}</span>
+							<span id="fontsize">{{item.sub_title}}</span>
 						</div>
 					</router-link>
 				</a>
@@ -18,30 +18,34 @@
 		<div class="anXinZhu">
 			<p class="titleAn">安心合租</p>
 			<ul>
-				<li v-for="(item,index) of anXinLive" :key="index">
-					<div>
-						<img :src="item.image">
-					</div>
-					<div>
-						<p>{{item.title}}</p>
-						<p>{{item.sub_title}}</p>
-						<p><b>{{item.image_title}}</b>&nbsp;元/每月</p>
-					</div>
+				<li v-for="(item,index) of anXinLive" :key="index" @click='getId(item)'>
+					<router-link to="/detail2">
+						<div>
+							<img :src="item.image">
+						</div>
+						<div>
+							<p>{{item.title}}</p>
+							<p>{{item.sub_title}}</p>
+							<p><b>{{item.image_title}}</b>&nbsp;元/每月</p>
+						</div>
+					</router-link>	
 				</li>
 			</ul>
 		</div>
 		<div class="anXinZiJu" v-show="isShow3">
 			<p class="titleAn">安心自居</p>
 			<ul>
-				<li v-for="(item,index) of anXinAlone" :key="index">
-					<div>
-						<img :src="item.image">
-					</div>
-					<div>
-						<p>{{item.title}}</p>
-						<p>{{item.sub_title}}</p>
-						<p><b>{{item.image_title}}</b>&nbsp;元/每月</p>
-					</div>
+				<li v-for="(item,index) of anXinAlone" :key="index" @click='getId(item)'>
+					<router-link to="/detail2">
+						<div>
+							<img :src="item.image">
+						</div>
+						<div>
+							<p>{{item.title}}</p>
+							<p>{{item.sub_title}}</p>
+							<p><b>{{item.image_title}}</b>&nbsp;元/每月</p>
+						</div>
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -71,6 +75,10 @@
 			// Introduce
 		},
 		methods:{
+			getId(item){
+				console.log(item);
+				this.$store.commit('changeDetail2',item);
+			},
 			getWeLive(){
 		        this.$axios.get(this.url,{
 					params:{
@@ -124,6 +132,7 @@
 <style type="text/css" lang="less" scoped>
 @import url('../../styles/main.less');
 .WeLiveIn::-webkit-scrollbar {display:none}
+#fontsize{font-size:6px;-webkit-transform:scale(0.8);}
 	.WeLive{
 		border-bottom:1px solid #ccc;
 		.padding(10,0,0,20);
@@ -184,10 +193,15 @@
 			font-weight: 700;
 			.margin(0,0,10,0);
 		}
+		img{
+			width: 100%;
+			// .w(375);
+		}
+
 		ul{
 			width: 100%;
 			li{
-				width: 90%;
+				width: 96%;
 				border: 1px solid #ddd;
 				// .margin(0,0,20,0);
 				.fs(16);
@@ -199,15 +213,18 @@
 					color:@color;
 					.h(30);
 					.lh(30);
+					.padding(0,0,0,10);
 				}
 				p:nth-child(2){
 					.fs(12);
 					color:@color2;
 					.h(30);
 					.lh(30);
+					.padding(0,0,0,10);
 				}
 				b{
 					color: #ff7966;
+					.padding(0,0,0,10);
 				}
 			}
 		}

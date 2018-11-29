@@ -2,9 +2,9 @@
   	<div>
   		<div class="header">
 	  		<div class="left">
-	  			<div @click="getNav()">
+	  			<router-link to="/home" tag="div">
 	  				<img src="../../img/logo.jpg">
-	  			</div>
+	  			</router-link>
   				<span @click="getCity()" >
 	  				{{nowCity}}
 	  				<i class="fa fa-caret-down"></i>
@@ -26,9 +26,8 @@
 
 <script>
 	import CityList from './CityList';
-	import NavList from './NavList'
-	import Vue from 'vue'
-	// import Home from '../pages/Home/Home'
+	import NavList from './NavList';
+	import Vue from 'vue';
 export default {
   	name: 'Header',
   	data(){
@@ -36,6 +35,7 @@ export default {
   			city:[1],
   			id: 1,
   			nowCity:this.$store.state.city,
+  			code: 'bj',
   			url: '/api/web-api/base-configure/city-list',
   			isLogin: "立即登录",
 	        data:{
@@ -52,11 +52,13 @@ export default {
   		NavList
   	},
   	methods:{
-  		toggle(id,city){
+  		toggle(id,city,code){
   			this.isShow = false;
   			this.id=id;
   			this.nowCity = city;
-  			this.$emit("cityId",id);
+  			this.code = code;
+  			this.$store.commit('changeCode',code);
+  			this.$emit("cityId",id,code);
   		},
   		toggle2(){
   			this.isShow2 = false;
@@ -105,7 +107,7 @@ u{
 		right: 0;
 		display: flex;
 		z-index:1000;
-		background-color: rgba(0,0,0,.4);
+		background-color: rgba(255,255,255,.3);
 		justify-content: space-between;
 		align-items: center;
 		.padding(0,20,0,20);
@@ -134,10 +136,10 @@ u{
 			
 		}
 		.right{
-			color: red;
+			color: #fff;
 			.fs(16);
 			i{
-				color:#eee;
+				color:#fff;
 			}
 		}
 	}

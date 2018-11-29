@@ -20,14 +20,16 @@
 			return {
 				test: "home",
 				id: 1,
+				code: 'bj',
 			}
 		},
 		methods:{
-			cityId(id){
-				this.id=id
+			cityId(id,code){
+				this.id=id;
+				this.code=code;
 			},
 			intro(city,trade){
-				console.log(city,trade);
+				// console.log(city,trade);
 			}
 		},
 		components:{
@@ -37,9 +39,9 @@
 			WeLive,
 			Footer
 		},
-		// mounted(){
-		// 	this.reload();
-		// }
+		mounted(){
+			this.cityId(this.id,this.code);
+		}
 	}
 </script>
 

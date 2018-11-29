@@ -8,12 +8,12 @@
 		<div>
 			<form onsubmit="return false" method="post">
 				<div class="email">
-					<input id="email" v-model="emailVal" name="email" @change="emailIsOk" type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required" />
+					<input id="email" v-model="emailVal" name="email"  type="email" placeholder="请输入您的邮箱" autocomplete="off" required="required" />
 					<i class="fa fa-check emailcheck" v-show="emailCheck"></i>
 					<p id="emailVerify"></p>
 				</div>
 				<div class="pass">
-					<input id="pass" type="password" v-model="passVal" placeholder="密码" required="required" @blur="passIsOk" />
+					<input id="pass" type="password" v-model="passVal" placeholder="密码" required="required" />
 					<i class="fa fa-check passcheck" v-show="passCheck"></i>
 					<p id="passVerify"></p>
 				</div>
@@ -70,26 +70,6 @@
 		components:{
 		},
 		methods:{
-			// setCookie(cookieName, cookieValue, date, path){
-			// 	// 包装数据
-			// 	var data = {
-			// 		"val" : cookieValue
-			// 	}
-			// 	// 编码
-			// 	var str = cookieName+"="+encodeURIComponent(JSON.stringify(data));
-			// 	// 过期时间
-			// 	if( date ){
-			// 		var dt = new Date();
-			// 		dt.setDate(dt.getDate()+date);
-			// 		str += ";expires="+dt.toGMTString();
-			// 	}
-			// 	// path属性
-			// 	if( path ){
-			// 		str += ";path="+path;
-			// 	}
-			// 	// 设置cookie
-			// 	document.cookie = str;
-			// },
 			emailIsOk(){
 				this.url = '/emaitest/admin/emailTest';
 				var emailTest = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.emailVal);
@@ -175,6 +155,14 @@
 				return false;
 			}
 		},
+		watch:{
+	        emailVal(val, oldVal){//普通的watch监听
+	           this.emailIsOk();
+	        },
+	        passVal(val, oldVal){//普通的watch监听
+	           this.passIsOk();
+	        },
+        },
 		// mounted(){
 		// 	$('#mpanel4').slideVerify({
 		// 	type : 2,		//类型

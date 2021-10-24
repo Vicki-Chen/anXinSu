@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<dev>这是dev-test使用命令行推送的</dev>
 		<Header></Header>
 		<div class="bg"></div>
 		<div class="checked">

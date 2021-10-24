@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<div>git push --set-upstream origin</div>
 		<Header></Header>
 		<div class="bg"></div>
 		<div class="intro">

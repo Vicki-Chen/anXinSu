@@ -43,7 +43,7 @@
 			infinite-scroll-disabled="loading"
 			infinite-scroll-distance="5"
 			>
-				<li v-for="(item,index) of sendData" @click='getRoom(item)'>
+				<li v-for="(item,index) of sendData" :key="index" @click='getRoom(item)'>
 					<img :onerror="erronimg" :src="item.list_pic">
 					<div>
 						<p class="main">{{item.name}}</p>
